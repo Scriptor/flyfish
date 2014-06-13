@@ -4,9 +4,13 @@
 (def flydir (dirname __FILE__))
 
 (fn copy-debug-file (cwd)
+  (compile-file (. flydir "/pharen_debug.phn"))
   (copy (. flydir "/pharen_debug.php") (. cwd "/pharen_debug.php")))
 
 (fn compile-file (file)
+  (exec (. "pharen " file)))
+
+(fn compile-debug (file)
   (exec (. "pharen -d " file))
   (str-replace ".phn" ".php" file))
 
@@ -18,5 +22,5 @@
     (exit 0))
 
   (copy-debug-file cwd)
-  (local phpfile (compile-file (path.join cwd file)))
+  (local phpfile (compile-debug (path.join cwd file)))
   (include-once phpfile))
