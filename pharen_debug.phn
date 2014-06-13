@@ -5,6 +5,10 @@
   (set! (:: .NamespaceNode repling) TRUE)
   (compile (. "(ns " ns ")")))
 
+(fn get-func-ns (fname)
+  (let [lastslash (strrpos fname "\\")]
+    (substr s 0 lastslash)))
+
 (fn help ()
 "Help:
    (vim) -- opens up both the .phn and .php files in vim")
