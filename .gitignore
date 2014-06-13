@@ -1,0 +1,5 @@
+phakefile.php
+*.tmp
+*.swp
+.DS_Store
+*.linemap.php

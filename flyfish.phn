@@ -1,0 +1,22 @@
+(ns flyfish)
+(use pharen.path as path)
+
+(def flydir (dirname __FILE__))
+
+(fn copy-debug-file (cwd)
+  (copy (. flydir "/pharen_debug.php") (. cwd "/pharen_debug.php")))
+
+(fn compile-file (file)
+  (exec (. "pharen -d " file))
+  (str-replace ".phn" ".php" file))
+
+(let [cwd (getcwd)
+      file (when-set (:argv 1))]
+
+  (when-not file
+    (prn "Usage: flyfish <pharen file>")
+    (exit 0))
+
+  (copy-debug-file cwd)
+  (local phpfile (compile-file (path.join cwd file)))
+  (include-once phpfile))

@@ -1,0 +1,13 @@
+(use pharen.phake as phake)
+
+(phake.proj "{project-name}"
+            {"description" "Debugger for Pharen projects"
+             "version" "<version>"})
+(task "build" "Building flyfish project files"
+      (compile-file (phake.project-path "/pharen_debug.phn"))
+      (phake.compile-with-flag "executable" "flyfish.phn"))
+
+(task "debug" "Compiling flyfish files"
+      (compile-file (phake.project-path "/pharen_debug.phn"))
+      (phake.compile-with-flag "debug" (phake.project-path "/simple.phn"))
+      (require (phake.project-path "/simple.php")))

@@ -1,0 +1,19 @@
+(ns pharen.debug)
+(use pharen.repl as repl)
+
+(fn set-repl-ns (ns)
+  (set! (:: .NamespaceNode repling) TRUE)
+  (compile (. "(ns " ns ")")))
+
+(fn help ()
+"Help:
+   (vim) -- opens up both the .phn and .php files in vim")
+
+(fn generate-pharen-err (msg phn-file phn-line php-file php-line)
+  (fn vim ()
+    (system (. "vim -o " phn-file " " php-file " +" phn-line " > `tty`")))
+
+  (prn "Error: " msg " near " phn-file ":" phn-line)
+  (set-repl-ns "pharen.debug")
+  (repl.work)
+  TRUE)
